@@ -37,3 +37,8 @@ python fbx_file_format_utility.py -d TARGET_PATH -v -a
 python fbx_file_format_utility.py -d TARGET_PATH -v -b
 ```
 
+## Force set export fbx file version
+```bash
+python fbx_file_format_utility.py -d TARGET_PATH -v -b -f FBXFBX201600
+```
+see [fbxio.h](http://help.autodesk.com/view/FBX/2020/ENU/?guid=FBX_Developer_Help_cpp_ref_fbxio_8h_html)
