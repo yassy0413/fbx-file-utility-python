@@ -106,8 +106,7 @@ def _main():
     with concurrent.futures.ProcessPoolExecutor() as executor:
         for root, _dirs, files in os.walk(ARGS.target_dir):
             for filename in files:
-                _title, ext = os.path.splitext(filename)
-                if ext == '.fbx':
+                if filename.endswith('.fbx'):
                     path = os.path.join(root, filename)
                     if ARGS.verify:
                         executor.submit(_verify, path)
