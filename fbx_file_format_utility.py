@@ -11,6 +11,9 @@ Latest FBX SDK)
 ref)
   https://github.com/segurvita/fbx_sdk_python_sample
 
+File version compatibility strings)
+  http://help.autodesk.com/view/FBX/2020/ENU/?guid=FBX_Developer_Help_cpp_ref_fbxio_8h_html
+
 """
 import os
 import sys
@@ -21,14 +24,16 @@ from fbx import FbxManager
 from fbx import FbxScene
 from fbx import FbxImporter
 from fbx import FbxExporter
+from fbx import FbxSceneRenamer
 
 def _build_arguments():
-    parser = argparse.ArgumentParser(description='A')
-    parser.add_argument('-d', '--target_dir', help='A')
+    parser = argparse.ArgumentParser(description='Fast convert fbx files in target directory to binary or ascii. or find.')
     parser.add_argument('-b', '--binary', help='Target file format is binary', action='store_true')
     parser.add_argument('-a', '--ascii', help='Target file format is ascii', action='store_true')
-    parser.add_argument('-v', '--verify', help='A', action='store_true')
-    parser.add_argument('-c', '--convert', help='A', action='store_true')
+    parser.add_argument('-v', '--verify', help='Find target fomrat fbx files.', action='store_true')
+    parser.add_argument('-c', '--convert', help='Convert fbx files to target format.', action='store_true')
+    parser.add_argument('-d', '--target_dir')
+    parser.add_argument('-f', '--file_version', help='Export fbx file version compatibility strings. see(fbxio.h)')
     args = parser.parse_args()
 
     if args.target_dir is None:
@@ -82,6 +87,8 @@ def _convert(path, file_format_id):
         importer.Destroy()
         exporter = FbxExporter.Create(FBX_MANAGER, "")
         exporter.Initialize(path, file_format_id)
+        if ARGS.file_version is not None:
+            exporter.SetFileExportVersion(ARGS.file_version, FbxSceneRenamer.eNone)
         exporter.Export(scene)
         exporter.Destroy()
         scene.Destroy()
